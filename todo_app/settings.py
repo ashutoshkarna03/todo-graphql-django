@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
+    'todo',
 ]
 
 MIDDLEWARE = [
@@ -77,11 +79,19 @@ WSGI_APPLICATION = 'todo_app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'NAME': os.environ.get('DB_NAME'),
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': os.environ.get('DB_HOST'),
+            'port': int(os.environ.get('DB_PORT')),
+            'username': os.environ.get('DB_USER'),
+            'password': os.environ.get('DB_PASSWORD'),
+            'authSource': os.environ.get('DB_USER'),
+            'authMechanism': 'SCRAM-SHA-1'
+        },
     }
 }
 
