@@ -20,6 +20,9 @@ class Query(graphene.ObjectType):
 
     def resolve_to_do_list(root, info, **kwargs):
         # Querying a list
+        user = info.context.user
+        if user.is_anonymous:
+            raise Exception('Not logged in!')
         return ToDoList.objects.all()
 
 class UpdateToDoList(graphene.Mutation):
@@ -34,6 +37,9 @@ class UpdateToDoList(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, task, id, created_by, is_complete):
+        user = info.context.user
+        if user.is_anonymous:
+            raise Exception('Not logged in!')
         to_do = ToDoList.objects.get(pk=id)
         to_do.task = task
         to_do.created_by = created_by
@@ -54,6 +60,9 @@ class CreateToDoList(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, task, created_by, is_complete):
+        user = info.context.user
+        if user.is_anonymous:
+            raise Exception('Not logged in!')
         todo = ToDoList()
         todo.task = task
         todo.created_by = created_by
@@ -71,6 +80,9 @@ class DeleteToDoList(graphene.Mutation):
 
     @classmethod
     def mutate(cls, root, info, id):
+        user = info.context.user
+        if user.is_anonymous:
+            raise Exception('Not logged in!')
         to_do = ToDoList.objects.get(pk=id)
         to_do.delete()
         
