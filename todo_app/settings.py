@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'todo',
     'graphene_django',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
