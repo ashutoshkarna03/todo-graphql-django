@@ -1,6 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from .models import ToDoList
+import graphql_jwt
 
 class ToDoListType(DjangoObjectType):
     class Meta: 
@@ -79,6 +80,9 @@ class Mutation(graphene.ObjectType):
     update_todo_list = UpdateToDoList.Field()
     create_todo_list = CreateToDoList.Field()
     delete_todo_list = DeleteToDoList.Field()
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
