@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from graphene_django.views import GraphQLView
 from todo.schema import schema as todo_schema
+from users.schema import schema as users_schema
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("todo", GraphQLView.as_view(graphiql=True, schema=todo_schema)),
+    path("users", GraphQLView.as_view(graphiql=True, schema=users_schema)),
 ]
